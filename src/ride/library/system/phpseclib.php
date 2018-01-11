@@ -6,11 +6,11 @@
  * @license http://www.opensource.org/licenses/mit-license.html MIT License
  */
 
-include 'Net/SFTP.php';
-include 'Net/SFTP/Stream.php';
-include 'Net/SCP.php';
-include 'System/SSH/Agent.php';
-include 'Crypt/RSA.php';
+use phpseclib\Net\SFTP;
+use phpseclib\Net\SFTP\Stream;
+use phpseclib\Net\SCP;
+use phpseclib\System\SSH\Agent;
+use phpseclib\Crypt\RSA;
 
 if (!function_exists('ssh2_connect')) {
     define('SSH2_TERM_UNIT_CHARS',  0);
@@ -30,14 +30,14 @@ if (!function_exists('ssh2_connect')) {
     // connection with SFTP doesn't mean you can't execute commands on it and do non-SFTP stuff on it
     function ssh2_connect($host, $port = 22, $methods = array(), $callbacks = array())
     {
-        $session = new Net_SFTP($host, $port);
+        $session = new SFTP($host, $port);
         $session->enableQuietMode();
         return $session;
     }
 
     function ssh2_auth_agent($session, $username)
     {
-        $agent = new System_SSH_Agent();
+        $agent = new Agent();
         return $session->login($username, $agent);
     }
 
@@ -65,7 +65,7 @@ if (!function_exists('ssh2_connect')) {
     // only RSA keys are currently supported
     function ssh2_auth_pubkey_file($session, $username, $pubkeyfile, $privkeyfile, $passphrase = NULL)
     {
-        $privkey = new Crypt_RSA();
+        $privkey = new RSA();
         if (isset($passphrase)) {
             $privkey->setPassword($passphrase);
         }
@@ -155,14 +155,14 @@ if (!function_exists('ssh2_connect')) {
 
     function ssh2_scp_recv($session, $remote_file, $local_file)
     {
-        $scp = new Net_SCP($session);
+        $scp = new SCP($session);
         return $scp->get($remote_file, $local_file);
     }
 
     // phpseclib does not let you change the $create_mode
     function ssh2_scp_send($session, $local_file, $remote_file, $create_mode = 0644)
     {
-        $scp = new Net_SCP($session);
+        $scp = new SCP($session);
         return $scp->put($remote_file, $local_file, NET_SCP_LOCAL_FILE);
     }
 
