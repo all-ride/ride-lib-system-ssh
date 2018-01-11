@@ -23,7 +23,7 @@ if (!function_exists('ssh2_connect')) {
     define('SSH2_FINGERPRINT_RAW', 2);
 
     // ssh2.tunnel is not supported
-    stream_wrapper_register('ssh2.sftp', 'Net_SFTP_Stream');
+    stream_wrapper_register('ssh2.sftp', 'phpseclib\\Net\\SFTP\\Stream');
 
     // phpseclib doesn't let you do SSH2 initially and then "upgrade" to SFTP. if you want to do SFTP
     // you have specify SFTP from the onset. that said, just because phpseclib will initialize a
