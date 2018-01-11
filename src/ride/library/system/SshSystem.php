@@ -10,6 +10,8 @@ use ride\library\system\file\SshFileSystem;
 
 use \Exception;
 
+include __DIR__ . '/phpseclib.php';
+
 /**
  * SSH system
  */

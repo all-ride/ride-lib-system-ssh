@@ -11,7 +11,8 @@
     ],
     "require": {
         "ride/lib-log": "^1.0.0",
-        "ride/lib-system": "^1.0.0"
+        "ride/lib-system": "^1.0.0",
+        "phpseclib/phpseclib": "^2.0",
     },
     "autoload": {
         "psr-0": {
